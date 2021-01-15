@@ -5,10 +5,10 @@ This software is programmed for a Windows utilisation.
 To properly run the program you need to download software and some variables need to be change
 
 - download Exiftool : https://exiftool.org/
-- download http://steghide.sourceforge.net/
+- download Steghide http://steghide.sourceforge.net/
 
 Change the variable in Main.java and DataController.java as follow :
-
+```
     // The windows path to exif.exe file
     public final String EXEC_EXIF_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\exiftool-12.14\\exiftool.exe";
     // The windows path to steghide.exe file
@@ -19,7 +19,7 @@ Change the variable in Main.java and DataController.java as follow :
     public final String TMP_TEXT_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\tmpTextStegano.txt";
    // Password of steghide encryption
     public final String PASSWORD_STEGHIDE = "SECU";
-
+```
 Then you can compile / run the program
 
 About java Class :
