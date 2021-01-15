@@ -32,10 +32,10 @@ public class DataController extends Throwable {
     Image image;
     String data = "";
     String filepath;
-    String execPath = EXEC_EXIF_PATH;
+    String execPath;
     String originalString = "";
-    public DataController(TypePicture imageKind, String filepath){
-
+    public DataController(TypePicture imageKind, String filepath, String execPath){
+        this.execPath = execPath;
         this.imageKind = imageKind;
         this.filepath = filepath;
          if(imageKind == TypePicture.EXIST) {
@@ -91,8 +91,8 @@ public class DataController extends Throwable {
         } catch (Exception e){}
     }
 
-    public DataController(TypePicture imageKind){
-
+    public DataController(TypePicture imageKind, String filepath){
+        this.execPath = execPath;
         this.imageKind = imageKind;
         this.filepath = filepath;
 
