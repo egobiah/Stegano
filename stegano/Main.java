@@ -133,6 +133,7 @@ public class Main extends Application {
         Label label_img = new Label("Image Path:");
         textField_img = new TextField ("E:\\Fichier_Olivier\\Olivier\\Bureau\\image.jpg");
         FileChooser path_img = new FileChooser();
+        path_img.setInitialDirectory(new File("E:\\Fichier_Olivier\\Olivier\\Bureau\\"));
 
         Button button_img = new Button("Select Directory");
         button_img.setOnAction(e -> {
@@ -264,6 +265,7 @@ public class Main extends Application {
 
 
     private void save(){
+        Boolean willLoead = false;
         if(!canSave)
             return;
         File selectedDirectory = path_file.showSaveDialog(stage);
@@ -283,12 +285,10 @@ public class Main extends Application {
 
 
         System.out.println("Saving at : " + res);
-        if(dataController.save(textField_img.getText(), res, hiddenDataText.getText())){
-            load();
-        }
+        dataController.save(textField_img.getText(), res, hiddenDataText.getText());
         root.setCenter(imagePane);
         textField_img.setText(res);
-
+        load();
 
 
 
@@ -297,6 +297,9 @@ public class Main extends Application {
     public void load(){
 
        dataController = new DataController(DataController.TypePicture.EXIST, textField_img.getText(), EXEC_EXIF_PATH);
+       try{
+           Thread.sleep(500);
+       } catch (Exception e) {}
        System.out.println("Image is : " + dataController.getImage() + " and type is " + dataController.getType());
 
         canSave = true;
@@ -330,6 +333,7 @@ public class Main extends Application {
 
     private String selectFile(){
         String res = "null";
+        path_file.setInitialDirectory(new File("E:\\Fichier_Olivier\\Olivier\\Bureau\\STEGA_DEMO"));
         File selectedDirectory = path_file.showOpenDialog(stage);
         try {
             res =  selectedDirectory.getAbsolutePath();

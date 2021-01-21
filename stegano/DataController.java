@@ -15,9 +15,9 @@ public class DataController extends Throwable {
     // The windows path to steghide.exe file
     public final String EXEC_STEGHIDE_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\steghide-0.5.1-win32\\steghide\\steghide.exe";
     // A windows path to a tmp file for thumbnail used by exif
-    public final String TMP_THUMB_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\tmpFileThumb.jpg";
+    public final String TMP_THUMB_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\STEGA_DEMO\\tmpFileThumb.jpg";
     // A windows path to a tmp file for .txt file used by steghide
-    public final String TMP_TEXT_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\tmpTextStegano.txt";
+    public final String TMP_TEXT_PATH = "E:\\Fichier_Olivier\\Olivier\\Bureau\\STEGA_DEMO\\tmpTextStegano.txt";
    // Password of steghide encryption
     public final String PASSWORD_STEGHIDE = "SECU";
 
@@ -57,8 +57,10 @@ public class DataController extends Throwable {
         try {
             String cmdErase = removeFileCmd(TMP_THUMB_PATH);
             String cmd = "cmd.exe /c  \"" + execPath + "\" -b -ThumbnailImage  " + filepath + " > " + TMP_THUMB_PATH ;
-            // rt.exec(cmdErase);
+
             Runtime rt = Runtime.getRuntime();
+            rt.exec(cmdErase);
+            Thread.sleep(300);
             rt.exec(cmd);
             Thread.sleep(500);
             File myObj = new File(TMP_THUMB_PATH);
@@ -73,9 +75,11 @@ public class DataController extends Throwable {
                 this.image = new Image(localUrl);
 
                 //filepath = TMP_THUMB_PATH;
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(300);
                 this.setData(this.retrieveData(TMP_THUMB_PATH));
+
                 //rt.exec(cmdErase);
+                //TimeUnit.MILLISECONDS.sleep(300);
                 return;
             }
 
@@ -163,20 +167,32 @@ public class DataController extends Throwable {
             // Embeding data
 
             String removeFileDest = removeFileCmd(savePos);
-            embedeData(textToSave);
             String cmdCopyOrigianl = "cmd.exe /c COPY \""+originalPath+"\" \"" + savePos +"\"";
             String cmdCopyInsert = "cmd.exe /c  " + EXEC_EXIF_PATH +  " \"-ThumbnailImage<="+TMP_THUMB_PATH+"\" " + savePos ;
             System.out.println(" CMD = " + cmdCopyInsert);
             //  ./exiftool "-ThumbnailImage<=test2.jpg" image1.jpg
             Runtime rt = Runtime.getRuntime();
             rt.exec(removeFileDest);
+            Thread.sleep(1000);
             rt.exec(cmdCopyOrigianl);
-            Thread.sleep(300);
+            Thread.sleep(500);
+            embedeData(textToSave);
+
+            Thread.sleep(500);
             rt.exec(cmdCopyInsert);
-            Thread.sleep(1500);
+            Thread.sleep(1000);
             String removeFileCopyExif = removeFileCmd(savePos + "_original");
             rt.exec(removeFileCopyExif);
             System.out.println(" CMD = " + removeFileCopyExif);
+
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Information");
+
+            // alert.setHeaderText("Results:");
+            alert.setContentText("File saved");
+
+            alert.showAndWait();
         } catch (Exception e){}
 
         System.out.println("Saving the thumb : " + filepath + " into : " + originalPath + " at position : " + savePos);
@@ -200,9 +216,12 @@ public class DataController extends Throwable {
                 PrintWriter tmpTextFile = new PrintWriter(TMP_TEXT_PATH);
                 tmpTextFile.println(s);
                 tmpTextFile.close();
-                // Embeding data
 
+                // Embeding data
+                System.out.println("The text to save is " + s);
                 rt.exec(cmdEmbed);
+                // BREAK ICI
+                Thread.sleep(1000);
                            } catch (Exception e){}
         }
 
@@ -226,15 +245,24 @@ public class DataController extends Throwable {
                 return "";
             }
             Scanner myReader = new Scanner(myObj);
-
+            System.out.println("The retrieved text is : ");
+            Boolean noBackN = true;
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
+                System.out.println("New line : " + data);
+                if(!noBackN){
+                    res += "\n";
+                }
                 res += data;
+                if(noBackN){
+                    noBackN = false;
+                }
             }
             myReader.close();
 
+            Thread.sleep(500);
             rt.exec(removeFileCmd(TMP_TEXT_PATH));
-
+            Thread.sleep(500);
 
 
         } catch (Exception e){}
