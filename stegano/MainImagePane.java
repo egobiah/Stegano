@@ -76,6 +76,10 @@ public class MainImagePane extends BorderPane {
 
     public void loadNewImage(Image image){
        this.image = image;
+       if(image == null){
+           this.borderPane.setCenter(null);
+           return;
+       }
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(hauteur);
         imageView.setPreserveRatio(true);
@@ -83,7 +87,13 @@ public class MainImagePane extends BorderPane {
         this.borderPane.setCenter(imageView);
     }
 
-
+    public Boolean imageIsNull(){
+        if(this.image == null){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 

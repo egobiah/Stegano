@@ -9,12 +9,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.beans.Expression;
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.lang.reflect.Type;
-import java.util.Scanner; // Import the Scanner class to read text files
 import java.io.File;
+
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -131,9 +127,9 @@ public class Main extends Application {
         BorderPane imgBox = new BorderPane();
 
         Label label_img = new Label("Image Path:");
-        textField_img = new TextField ("E:\\Fichier_Olivier\\Olivier\\Bureau\\image.jpg");
+        textField_img = new TextField ("E:\\Fichier_Olivier\\Olivier\\Bureau\\STEGA_DEMO\\bouteille2.jpg");
         FileChooser path_img = new FileChooser();
-        path_img.setInitialDirectory(new File("E:\\Fichier_Olivier\\Olivier\\Bureau\\"));
+        path_img.setInitialDirectory(new File("E:\\Fichier_Olivier\\Olivier\\Bureau\\STEGA_DEMO"));
 
         Button button_img = new Button("Select Directory");
         button_img.setOnAction(e -> {
@@ -231,6 +227,9 @@ public class Main extends Application {
 
     private void refreshMinitature(){
         miniature = new MainImagePane(dataController,HAUTEUR_IMAGE/4 );
+        if(miniature.imageIsNull()){
+           // dataController
+        }
         minitatureBoxButtonAndImage.getChildren().removeAll();
         minitatureBoxButtonAndImage.getChildren().clear();
         minitatureBoxButtonAndImage.getChildren().add(miniature );
@@ -302,7 +301,7 @@ public class Main extends Application {
        } catch (Exception e) {}
        System.out.println("Image is : " + dataController.getImage() + " and type is " + dataController.getType());
 
-        canSave = true;
+       canSave = true;
        refreshAll();
 
 

@@ -69,6 +69,9 @@ public class DataController extends Throwable {
             if(myObj.length() == 0){
                 System.out.println("No thumb here");
                 this.imageKind = TypePicture.GENERATED;
+                File file = new File(filepath);
+                String localUrl = file.toURI().toURL().toString();
+                this.image = new Image(localUrl);
             } else {
                 File file = new File(TMP_THUMB_PATH);
                 String localUrl = file.toURI().toURL().toString();
